@@ -1,0 +1,31 @@
+% Mace4 input: mace4_kill_with_protect.in
+% Scenario: mafia kills a villager; doctor protects the victim.
+% Use Mace4 to search for a finite model of the assumptions (i.e. a world where the facts hold).
+
+formulas(assumptions).
+% Roles
+isMafia(a).
+isDoctor(b).
+isCop(c).
+isVillager(d).
+
+% Everyone starts alive
+alive(a).
+alive(b).
+alive(c).
+alive(d).
+
+% Night actions: mafia a kills d; doctor b protects d
+kill(a,d).
+protect(b,d).
+
+% Axioms
+all X all Y ( kill(X,Y) & -protected(Y) -> -alive(Y) ).
+all D all Y ( protect(D,Y) -> protected(Y) ).
+all C all T ( isCop(C) & isMafia(T) & investigate(C,T) -> recognizes(C,T) ).
+
+end.
+
+% No goals: Mace4 will try to find a finite model of the assumptions above.
+% Run: mace4 -f mace4_kill_with_protect.in
+% If Mace4 finds a model, it prints the domain and predicate extensions.

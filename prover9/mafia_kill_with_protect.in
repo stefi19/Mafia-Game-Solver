@@ -1,0 +1,32 @@
+% Prover9 input: mafia_kill_with_protect.in
+% Scenario: mafia kills a villager; doctor protects the victim.
+% We want to show that the victim survives (i.e., -Alive(victim) is NOT provable).
+
+formulas(assumptions).
+% Roles
+isMafia(a).
+isDoctor(b).
+isCop(c).
+isVillager(d).
+
+% Everyone starts alive
+alive(a).
+alive(b).
+alive(c).
+alive(d).
+
+% Night actions: mafia a kills d; doctor b protects d
+kill(a,d).
+protect(b,d).
+
+% Axioms
+all X all Y ( kill(X,Y) & -protected(Y) -> -alive(Y) ).
+all D all Y ( protect(D,Y) -> protected(Y) ).
+all C all T ( isCop(C) & isMafia(T) & investigate(C,T) -> recognizes(C,T) ).
+
+end.
+
+formulas(goals).
+% We try to prove death. This should fail because of Protect(b,d).
+-alive(d).
+end.

@@ -1,0 +1,54 @@
+% Auto-generated Prover9 input: multi-night Mafia example
+% Nights: 2
+
+formulas(assumptions).
+isMafia(a).
+isMafia(b).
+isMafia(c).
+isDoctor(d).
+isCop(e).
+isVillager(f).
+isVillager(g).
+isVillager(h).
+isVillager(i).
+isVillager(j).
+
+% time constant
+% n0
+% time constant
+% n1
+% time constant
+% n2
+
+next(n0,n1).
+next(n1,n2).
+
+alive(a,n0).
+alive(b,n0).
+alive(c,n0).
+alive(d,n0).
+alive(e,n0).
+alive(f,n0).
+alive(g,n0).
+alive(h,n0).
+alive(i,n0).
+alive(j,n0).
+
+kill(a,d,n0).
+
+kill(a,c,n1).
+
+% Axioms
+all D all Y all N ( protect(D,Y,N) -> protected(Y,N) ).
+all X all Y all N all M ( kill(X,Y,N) & -protected(Y,N) & next(N,M) -> -alive(Y,M) ).
+all C all T all N ( isCop(C) & isMafia(T) & investigate(C,T,N) -> recognizes(C,T) ).
+
+% Villagers win: no mafia alive at time N
+all N ( ( all P ( isMafia(P) -> -alive(P,N) ) ) -> villagersWin(N) ).
+% Mafia win: all alive players are mafia at time N (sufficient condition)
+all N ( ( all P ( -alive(P,N) -> isMafia(P) ) ) -> mafiaWin(N) ).
+end.
+
+formulas(goals).
+% Add goals here, e.g. -Alive(e,n1) or Recognizes(c,a).
+end.

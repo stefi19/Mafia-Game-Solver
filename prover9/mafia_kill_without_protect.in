@@ -1,0 +1,37 @@
+% Prover9 input: mafia_kill_without_protect.in
+% Scenario: mafia kills a villager; no doctor protection.
+% We want to prove that the victim is dead at the end of the night.
+
+formulas(assumptions).
+% Roles (constants for players: a,b,c,d)
+isMafia(a).
+isDoctor(b).
+isCop(c).
+isVillager(d).
+
+% Everyone starts alive
+alive(a).
+alive(b).
+alive(c).
+alive(d).
+
+% Night actions: mafia a kills d; doctor does not protect d in this scenario
+kill(a,d).
+% No Protect(b,d) fact here
+
+% Axioms (rules)
+% If someone kills Y and Y is not Protected, then Y is not Alive.
+all X all Y ( kill(X,Y) & -protected(Y) -> -alive(Y) ).
+
+% If some doctor Protects(Y) then Protected(Y) holds.
+all D all Y ( protect(D,Y) -> protected(Y) ).
+
+% Cop investigating a mafia yields recognition (modeling an outcome of investigate action)
+all C all T ( isCop(C) & isMafia(T) & investigate(C,T) -> recognizes(C,T) ).
+
+end.
+
+formulas(goals).
+% Goal: prove that d is dead
+-alive(d).
+end.

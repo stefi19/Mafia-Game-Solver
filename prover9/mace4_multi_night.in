@@ -1,0 +1,43 @@
+% Mace4 input: mace4_multi_night.in
+% Auto-generated example for Mace4 model finding — multi-night scenario.
+% This file mirrors the generator output for multi-night scenarios.
+
+formulas(assumptions).
+isMafia(a).
+isDoctor(b).
+isCop(c).
+isVillager(d).
+isVillager(e).
+
+next(n0,n1).
+next(n1,n2).
+
+alive(a,n0).
+alive(b,n0).
+alive(c,n0).
+alive(d,n0).
+alive(e,n0).
+
+kill(a,d,n0).
+protect(b,d,n0).
+investigate(c,a,n0).
+
+kill(a,e,n1).
+protect(b,a,n1).
+investigate(c,a,n1).
+
+eliminated(e,n1).
+-alive(e,n1).
+
+eliminated(a,n2).
+-alive(a,n2).
+
+all D all Y all N ( protect(D,Y,N) -> protected(Y,N) ).
+all X all Y all N all M ( kill(X,Y,N) & -protected(Y,N) & next(N,M) -> -alive(Y,M) ).
+all C all T all N ( isCop(C) & isMafia(T) & investigate(C,T,N) -> recognizes(C,T) ).
+all P all N all M ( alive(P,N) & next(N,M) & -(-alive(P,M)) -> alive(P,M) ).
+
+end.
+
+% Run with: mace4 -f mace4_multi_night.in
+% Mace4 will try to find a finite model that satisfies the assumptions above.

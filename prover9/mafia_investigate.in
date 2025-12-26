@@ -1,0 +1,25 @@
+% Prover9 input: mafia_investigate.in
+% Scenario: cop investigates a player who is mafia. We want to prove Recognizes(c,a).
+
+formulas(assumptions).
+% Roles
+isMafia(a).
+isDoctor(b).
+isCop(c).
+
+% Alive facts (not strictly necessary here)
+alive(a).
+alive(b).
+alive(c).
+
+% Night action: cop investigates a
+investigate(c,a).
+
+% Axiom: if a cop investigates a mafia, she recognizes them
+all C all T ( isCop(C) & isMafia(T) & investigate(C,T) -> recognizes(C,T) ).
+
+end.
+
+formulas(goals).
+recognizes(c,a).
+end.
