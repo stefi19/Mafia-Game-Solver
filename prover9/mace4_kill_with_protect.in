@@ -25,7 +25,3 @@ all D all Y ( protect(D,Y) -> protected(Y) ).
 all C all T ( isCop(C) & isMafia(T) & investigate(C,T) -> recognizes(C,T) ).
 
 end.
-
-% No goals: Mace4 will try to find a finite model of the assumptions above.
-% Run: mace4 -f mace4_kill_with_protect.in
-% If Mace4 finds a model, it prints the domain and predicate extensions.

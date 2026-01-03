@@ -38,6 +38,3 @@ all C all T all N ( isCop(C) & isMafia(T) & investigate(C,T,N) -> recognizes(C,T
 all P all N all M ( alive(P,N) & next(N,M) & -(-alive(P,M)) -> alive(P,M) ).
 
 end.
-
-% Run with: mace4 -f mace4_multi_night.in
-% Mace4 will try to find a finite model that satisfies the assumptions above.

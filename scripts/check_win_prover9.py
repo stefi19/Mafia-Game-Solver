@@ -78,7 +78,6 @@ def build_in_content(state):
 
 def run_mace_query_via_subprocess(infile_path: Path, query: str):
     """Fallback: write query file and call mace4 on PATH. Returns (rc, stdout)."""
-    # Mace4 typically reads the .in file and prints models; many installs use `mace4`.
     # We'll append a temporary goals section with the query.
     with open(infile_path, 'r') as f:
         base = f.read()
